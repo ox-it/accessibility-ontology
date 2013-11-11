@@ -1,0 +1,122 @@
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#>.
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl:     <http://www.w3.org/2002/07/owl#>.
+@prefix geo:     <http://www.w3.org/2003/01/geo/wgs84_pos#>.
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#>.
+
+@prefix access: <http://purl.org/net/accessiblity/> .
+@prefix parkingType: <http://purl.org/net/accessiblity/parkingType/> .
+@prefix doorEntryType: <http://purl.org/net/accessiblity/doorEntryType/> .
+
+access: a owl:Ontology ;
+    rdfs:label "Accessibility ontology" ;
+    dcterms:publisher <https://data.ox.ac.uk/id/open-data-team> .
+
+access:numberOfDisabledParkingSpaces a owl:DatatypeProperty, rdfs:Property ;
+    rdfs:label "number of disabled parking spaces"@en ;
+    rdfs:domain geo:SpatialThing ;
+    rdfs:range xsd:int ;
+    rdfs:isDefinedBy access: .
+
+access:nearbyParkingType a owl:ObjectProperty, rdfs:Property ;
+    rdfs:label "type of nearby parking@en" ;
+    rdfs:domain geo:SpatialThing ;
+    rdfs:range parkingType:ParkingType ;
+    rdfs:isDefinedBy access: .
+
+parkingType: a skos:ConceptScheme ;
+    skos:prefLabel "parking types"@en ;
+    skos:topConcept
+      parkingType:PayAndDisplay ,
+      parkingType:BlueBadge ;
+    rdfs:isDefinedBy access: .
+
+parkingType:ParkingType a rdfs:Class ;
+    rdfs:label "parking type"@en ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:isDefinedBy access: .
+
+parkingType:PayAndDisplay a parkingType:ParkingType, skos:Concept ;
+    skos:prefLabel "pay and display"@en ;
+    skos:inScheme parkingType: ;
+    rdfs:isDefinedBy access: .
+
+parkingType:BlueBadge a parkingType:ParkingType, skos:Concept ;
+    skos:prefLabel "blue badge"@en ;
+    skos:inScheme parkingType: ;
+    rdfs:isDefinedBy access: .
+
+access:mainEntranceHasLevelAccess a owl:DatatypeProperty, rdfs:Property ;
+    rdfs:label "main entrance has level access"@en ;
+    rdfs:domain geo:SpatialThing ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy access: .
+
+access:hasLevelAccess a owl:DatatypeProperty, rdfs:Property ;
+    rdfs:label "main entrance has level access"@en ;
+    rdfs:domain geo:SpatialThing ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy access: .
+
+access:doorEntryType a owl:ObjectProperty, rdfs:Property ;
+    rdfs:label "type of door entry"@en ;
+    rdfs:domain geo:SpatialThing ;
+    rdfs:range doorEntryType:DoorEntryType ;
+    rdfs:isDefinedBy access: .
+
+doorEntryType: a skos:ConceptScheme ;
+    skos:prefLabel "types of door entry"@en ;
+    skos:topConcept
+      doorEntryType:Manual ,
+      doorEntryType:Powered ,
+      doorEntryType:Automatic ;
+    rdfs:isDefinedBy access: .
+
+doorEntryType:DoorEntryType a rdfs:Class ;
+    rdfs:label "door entry type"@en ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:isDefinedBy access: .
+
+doorEntryType:Manual a doorEntryType:DoorEntryType, skos:Concept ;
+    skos:prefLabel "manual"@en ;
+    skos:definition "Door is not powered, and requires opening manually."@en ;
+    skos:inScheme doorEntryType: ;
+    skos:isDefinedBy access: .
+
+doorEntryType:Powered a doorEntryType:DoorEntryType, skos:Concept ;
+    skos:prefLabel "powered"@en ;
+    skos:definition "Door operated by pressing a pad or button."@en ;
+    skos:inScheme doorEntryType: ;
+    skos:isDefinedBy access: .
+
+doorEntryType:Automatic a doorEntryType:DoorEntryType, skos:Concept ;
+    skos:prefLabel "automatic"@en ;
+    skos:definition "Door operated by a sensor."@en ;
+    skos:inScheme doorEntryType: ;
+    skos:isDefinedBy access: .
+
+access:numberOfFloors a owl:DatatypeProperty, rdfs:Property ;
+    rdfs:label "number of floors"@en ;
+    rdfs:domain geo:SpatialThing ;
+    rdfs:range xsd:int ;
+    rdfs:isDefinedBy access: .
+
+access:numberOfAccessibleToilets a owl:DatatypeProperty, rdfs:Property ;
+    rdfs:label "number of accessible toilets"@en ;
+    rdfs:domain geo:SpatialThing ;
+    rdfs:range xsd:int ;
+    rdfs:isDefinedBy access: .
+
+access:liftToAllFloors a owl:DatatypeProperty, rdfs:Property ;
+    rdfs:label "all floors accessible by lift"@en ;
+    rdfs:domain geo:SpatialThing ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy access: .
+
+access:hasHearingSupportSystem a owl:DatatypeProperty, rdfs:Property ;
+    rdfs:label "has a hearing support system"@en ;
+    rdfs:domain geo:SpatialThing ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy access: .
+
