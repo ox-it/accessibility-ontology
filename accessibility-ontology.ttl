@@ -7,7 +7,8 @@
 
 @prefix access: <http://purl.org/net/accessiblity/> .
 @prefix parkingType: <http://purl.org/net/accessiblity/parkingType/> .
-@prefix doorEntryType: <http://purl.org/net/accessiblity/doorEntryType/> .
+@prefix entranceOpeiningType: <http://purl.org/net/accessiblity/doorEntryType/> .
+@prefix levelness: <http://purl.org/net/accessibility/levelness/> .
 
 access: a owl:Ontology ;
     rdfs:label "Accessibility ontology" ;
@@ -32,68 +33,56 @@ parkingType: a skos:ConceptScheme ;
       parkingType:BlueBadge ;
     rdfs:isDefinedBy access: .
 
-parkingType:ParkingType a rdfs:Class ;
+access:ParkingType a rdfs:Class ;
     rdfs:label "parking type"@en ;
     rdfs:subClassOf skos:Concept ;
     rdfs:isDefinedBy access: .
 
-parkingType:PayAndDisplay a parkingType:ParkingType, skos:Concept ;
+parkingType:PayAndDisplay a access:ParkingType, skos:Concept ;
     skos:prefLabel "pay and display"@en ;
     skos:inScheme parkingType: ;
     rdfs:isDefinedBy access: .
 
-parkingType:BlueBadge a parkingType:ParkingType, skos:Concept ;
+parkingType:BlueBadge a access:ParkingType, skos:Concept ;
     skos:prefLabel "blue badge"@en ;
     skos:inScheme parkingType: ;
     rdfs:isDefinedBy access: .
 
-access:mainEntranceHasLevelAccess a owl:DatatypeProperty, rdfs:Property ;
-    rdfs:label "main entrance has level access"@en ;
-    rdfs:domain geo:SpatialThing ;
-    rdfs:range xsd:boolean ;
-    rdfs:isDefinedBy access: .
-
-access:hasLevelAccess a owl:DatatypeProperty, rdfs:Property ;
-    rdfs:label "main entrance has level access"@en ;
-    rdfs:domain geo:SpatialThing ;
-    rdfs:range xsd:boolean ;
-    rdfs:isDefinedBy access: .
-
-access:doorEntryType a owl:ObjectProperty, rdfs:Property ;
+access:entranceOpeiningType a owl:ObjectProperty, rdfs:Property ;
     rdfs:label "type of door entry"@en ;
     rdfs:domain geo:SpatialThing ;
-    rdfs:range doorEntryType:DoorEntryType ;
+    rdfs:range entranceOpeiningType:EntranceOpeningType ;
     rdfs:isDefinedBy access: .
 
-doorEntryType: a skos:ConceptScheme ;
+entranceOpeiningType: a skos:ConceptScheme ;
     skos:prefLabel "types of door entry"@en ;
     skos:topConcept
-      doorEntryType:Manual ,
-      doorEntryType:Powered ,
-      doorEntryType:Automatic ;
+      entranceOpeiningType:ManualDoor ,
+      entranceOpeiningType:PoweredDoor ,
+      entranceOpeiningType:AutomaticDoor ;
     rdfs:isDefinedBy access: .
 
-doorEntryType:DoorEntryType a rdfs:Class ;
+access:EntranceOpeningType a rdfs:Class ;
     rdfs:label "door entry type"@en ;
     rdfs:subClassOf skos:Concept ;
     rdfs:isDefinedBy access: .
 
-doorEntryType:Manual a doorEntryType:DoorEntryType, skos:Concept ;
+entranceOpeiningType:ManualDoor a access:EntranceOpeningType, skos:Concept ;
     skos:prefLabel "manual"@en ;
     skos:definition "Door is not powered, and requires opening manually."@en ;
-    skos:inScheme doorEntryType: ;
+    skos:inScheme entranceOpeiningType: ;
     skos:isDefinedBy access: .
 
-doorEntryType:Powered a doorEntryType:DoorEntryType, skos:Concept ;
+entranceOpeiningType:PoweredDoor a access:EntranceOpeningType, skos:Concept ;
     skos:prefLabel "powered"@en ;
     skos:definition "Door operated by pressing a pad or button."@en ;
-    skos:inScheme doorEntryType: ;
+    skos:inScheme entranceOpeiningType: ;
     skos:isDefinedBy access: .
 
-doorEntryType:Automatic a doorEntryType:DoorEntryType, skos:Concept ;
+entranceOpeiningType:AutomaticDoor a access:EntranceOpeningType, skos:Concept ;
     skos:prefLabel "automatic"@en ;
     skos:definition "Door operated by a sensor."@en ;
-    skos:inScheme doorEntryType: ;
+    skos:inScheme entranceOpeiningType: ;
     skos:isDefinedBy access: .
 
 access:numberOfFloors a owl:DatatypeProperty, rdfs:Property ;
@@ -119,4 +108,71 @@ access:hasHearingSupportSystem a owl:DatatypeProperty, rdfs:Property ;
     rdfs:domain geo:SpatialThing ;
     rdfs:range xsd:boolean ;
     rdfs:isDefinedBy access: .
+
+
+access:Levelness a rdfs:Class ;
+    rdfs:label "entrance levelness"@en ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:isDefinedBy access: .
+
+levelness: a skos:ConceptScheme ;
+    skos:prefLabel "entrance levelness"@en ;
+    rdfs:seeAlso access:Levelness ;
+    rdfs:isDefinedBy access: ;
+    skos:hasTopConcept
+        levelness:NotAccessible ,
+        levelness:Accessible ,
+        levelness:NotLevel ,
+        levelness:Level .
+
+levelness:NotAccessible a access:Levelness, skos:Concept ;
+    skos:prefLabel "not accessible"@en ;
+    skos:inScheme levelness: ;
+    skos:isDefinedBy access: .
+
+
+levelness:Accessible a access:Levelness, skos:Concept ;
+    skos:prefLabel "accessible"@en ;
+    skos:inScheme levelness: ;
+    skos:isDefinedBy access: .
+
+
+levelness:NotLevel a access:Levelness, skos:Concept ;
+    skos:prefLabel "not level"@en ;
+    skos:inScheme levelness: ;
+    skos:isDefinedBy access: ;
+    skos:narrower
+        levelness:PoweredLift ,
+        levelness:Ramp ,
+        levelness:Steps .
+
+levelness:Level a access:Levelness, skos:Concept ;
+    skos:prefLabel "level"@en ;
+    skos:inScheme levelness: ;
+    skos:isDefinedBy access: .
+
+levelness:PoweredLift a access:Levelness, skos:Concept ;
+    skos:prefLabel "powered lift"@en ;
+    skos:definition "any type of powered lift (e.g. platform, stair, elevator)"@en ;
+    skos:inScheme levelness: ;
+    skos:isDefinedBy access: ;
+    skos:narrower
+        levelness:PlatformLift ,
+        levelness:StairLift ,
+        levelness:Elevator ,
+
+levelness:PlatformLift a access:Levelness, skos:Concept ;
+    skos:prefLabel "platform lift" ;
+    skos:inScheme levelness: ;
+    skos:isDefinedBy access: .
+
+levelness:StairLift a access:Levelness, skos:Concept ;
+    skos:prefLabel "stairlift" ;
+    skos:inScheme levelness: ;
+    skos:isDefinedBy access: .
+
+levelness:Elevator a access:Levelness, skos:Concept ;
+    skos:prefLabel "lift"@en-gb, "elevator"@en-us ;
+    skos:inScheme levelness: ;
+    skos:isDefinedBy access: .
 
